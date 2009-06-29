@@ -1,5 +1,9 @@
 Revision history for Test-JSON
 
+0.07    2009-06-29
+        Ensure that we can run with subtests by not having Test::Builder->new
+        at the top of the script.
+
 0.06    2007-12-29
         Minor documentation updates.
 

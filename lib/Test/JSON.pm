@@ -12,13 +12,12 @@ Test::JSON - Test JSON data
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
-my $TEST = Test::Builder->new;
 my $JSON = JSON::Any->new;
 
 sub import {
@@ -31,8 +30,9 @@ sub import {
         *{"${caller}::$sub"} = \&{$sub};
     }
 
-    $TEST->exported_to($caller);
-    $TEST->plan(@_);
+    my $test = Test::Builder->new;
+    $test->exported_to($caller);
+    $test->plan(@_);
 }
 
 =head1 SYNOPSIS
@@ -100,13 +100,14 @@ sub is_valid_json ($;$) {
     croak "usage: is_valid_json(input,test_name)"
       unless defined $input;
     eval { $JSON->decode($input) };
+    my $test = Test::Builder->new;
     if ( my $error = $@ ) {
-        $TEST->ok( 0, $test_name );
-        $TEST->diag("Input was not valid JSON:\n\n\t$error");
+        $test->ok( 0, $test_name );
+        $test->diag("Input was not valid JSON:\n\n\t$error");
         return;
     }
     else {
-        $TEST->ok( 1, $test_name );
+        $test->ok( 1, $test_name );
         return 1;
     }
 }
@@ -119,9 +120,10 @@ sub is_json ($$;$) {
     my %json_for;
     foreach my $item ( [ input => $input ], [ expected => $expected ] ) {
         my $json = eval { $JSON->decode( $item->[1] ) };
+        my $test = Test::Builder->new;
         if ( my $error = $@ ) {
-            $TEST->ok( 0, $test_name );
-            $TEST->diag("$item->[0] was not valid JSON: $error");
+            $test->ok( 0, $test_name );
+            $test->diag("$item->[0] was not valid JSON: $error");
             return;
         }
         else {
