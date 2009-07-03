@@ -1,5 +1,8 @@
 Revision history for Test-JSON
 
+0.10    2009-07-03
+        Need dependency on JSON::Any 1.20 or greater.
+
 0.07    2009-06-29
         Ensure that we can run with subtests by not having Test::Builder->new
         at the top of the script.
