@@ -2,9 +2,11 @@ package Test::JSON;
 
 use strict;
 use Carp;
-use Test::Builder;
 use Test::Differences;
 use JSON::Any;
+
+use base 'Test::Builder::Module';
+our @EXPORT = qw/is_json is_valid_json/;
 
 =head1 NAME
 
@@ -19,21 +21,6 @@ Version 0.1
 our $VERSION = '0.1';
 
 my $JSON = JSON::Any->new;
-
-sub import {
-    my $self   = shift;
-    my $caller = caller;
-
-    my @subs = qw/is_json is_valid_json/;
-    foreach my $sub (@subs) {
-        no strict 'refs';
-        *{"${caller}::$sub"} = \&{$sub};
-    }
-
-    my $test = Test::Builder->new;
-    $test->exported_to($caller);
-    $test->plan(@_);
-}
 
 =head1 SYNOPSIS
 
@@ -100,7 +87,7 @@ sub is_valid_json ($;$) {
     croak "usage: is_valid_json(input,test_name)"
       unless defined $input;
     eval { $JSON->decode($input) };
-    my $test = Test::Builder->new;
+    my $test = __PACKAGE__->builder;
     if ( my $error = $@ ) {
         $test->ok( 0, $test_name );
         $test->diag("Input was not valid JSON:\n\n\t$error");
@@ -120,7 +107,7 @@ sub is_json ($$;$) {
     my %json_for;
     foreach my $item ( [ input => $input ], [ expected => $expected ] ) {
         my $json = eval { $JSON->decode( $item->[1] ) };
-        my $test = Test::Builder->new;
+        my $test = __PACKAGE__->builder;
         if ( my $error = $@ ) {
             $test->ok( 0, $test_name );
             $test->diag("$item->[0] was not valid JSON: $error");
