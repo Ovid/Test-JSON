@@ -10,7 +10,7 @@ my $builder = Module::Build->new(
         'JSON::Any'         => 1.20,
         'Test::Differences' => 0.47,
         'Test::Simple'      => 0.62,
-        'Test::Tester'      => 0.103,
+        'Test::Tester'      => 0.107,
     },
     add_to_cleanup     => ['Test-JSON-*'],
     create_makefile_pl => 'traditional',
