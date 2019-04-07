@@ -8,7 +8,7 @@ license: perl
 resources:
   license: ~
 requires:
-  JSON::Any: 1.2
+  JSON::MaybeXS
   Test::Differences: 0.47
   Test::Simple: 0.62
   Test::Tester: 0.107

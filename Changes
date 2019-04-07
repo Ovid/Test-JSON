@@ -1,5 +1,8 @@
 Revision history for Test-JSON
 
+0.12    2019-04-07
+        JSON::Any is deprecated. So using JSON::MaybeXS version 1.004 instead 
+
 0.11    2009-08-09
         Upgrade Test::Tester dependency to 0.107.  This fixes an intermittant
         test failure identified by Eric Wilhelm in
