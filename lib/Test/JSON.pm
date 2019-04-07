@@ -3,7 +3,7 @@ package Test::JSON;
 use strict;
 use Carp;
 use Test::Differences;
-use JSON::Any;
+use JSON::MaybeXS;
 
 use base 'Test::Builder::Module';
 our @EXPORT = qw/is_json is_valid_json/;
@@ -20,7 +20,7 @@ Version 0.11
 
 our $VERSION = '0.11';
 
-my $JSON = JSON::Any->new;
+my $JSON = JSON::MaybeXS->new;
 
 =head1 SYNOPSIS
 
@@ -135,7 +135,7 @@ your bug as I make changes.
 
 =head1 SEE ALSO
 
-This test module uses L<JSON::Any> and L<Test::Differences>.
+This test module uses L<JSON::MaybeXS> and L<Test::Differences>.
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -146,9 +146,6 @@ Bricolage content management system, L<http://www.bricolage.cc/>.
 Thanks to Makamaka Hannyaharamitu C<makamaka@cpan.org> for a patch to make
 this work with JSON 2.0.
 
-Thanks to Stevan Little for suggesting a switch to L<JSON::Any>.  This makes
-it easier for this module to work with whatever JSON module you have
-installed.
 
 =head1 COPYRIGHT & LICENSE
 
